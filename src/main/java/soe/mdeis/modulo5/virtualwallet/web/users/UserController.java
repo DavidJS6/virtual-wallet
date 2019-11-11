@@ -3,7 +3,6 @@ package soe.mdeis.modulo5.virtualwallet.web.users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import soe.mdeis.modulo5.virtualwallet.database.models.User;
 import soe.mdeis.modulo5.virtualwallet.web.users.service.UserService;
 
 import java.util.List;
@@ -29,23 +28,23 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public UserResponseDto update(@PathVariable int id, @RequestBody UserRequestDto userRequest) {
+    public UserResponseDto update(@PathVariable int id, @RequestBody UserRequestDto userRequest) throws UserException {
         return service.update(id, userRequest);
     }
 
     @PostMapping
-    public UserResponseDto store(@RequestBody UserRequestDto userRequest) {
+    public UserResponseDto store(@RequestBody UserRequestDto userRequest) throws UserException {
         return service.store(userRequest);
     }
 
     @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable int id) {
+    public boolean delete(@PathVariable int id) throws UserException {
         service.delete(id);
         return true;
     }
 
     @GetMapping("/{id}/wallets")
-    public List<WalletResponseDto> getWallets(@PathVariable int id) {
+    public List<WalletResponseDto> getWallets(@PathVariable int id) throws UserException {
         return service.getUserWallets(id);
     }
 
