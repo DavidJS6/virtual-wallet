@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}/wallets")
-    public List<WalletResponseDto> getWallets(@PathVariable int id) throws UserException {
+    public List<WalletResponseDto> getWallets(@PathVariable int id) {
         return service.getUserWallets(id);
     }
 
