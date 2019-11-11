@@ -3,6 +3,7 @@ package soe.mdeis.modulo5.virtualwallet.web.wallets.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import soe.mdeis.modulo5.virtualwallet.database.models.Wallet;
+import soe.mdeis.modulo5.virtualwallet.database.repositories.UserRepository;
 import soe.mdeis.modulo5.virtualwallet.database.repositories.WalletRepository;
 import soe.mdeis.modulo5.virtualwallet.web.users.service.UserService;
 import soe.mdeis.modulo5.virtualwallet.web.wallets.WalletRequestDto;
@@ -13,12 +14,12 @@ import java.util.List;
 public class WalletServiceImpl implements WalletService {
 
     private final WalletRepository walletRepository;
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public WalletServiceImpl(WalletRepository walletRepository, UserService userService) {
+    public WalletServiceImpl(WalletRepository walletRepository, UserRepository userRepository) {
         this.walletRepository = walletRepository;
-        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -26,7 +27,7 @@ public class WalletServiceImpl implements WalletService {
         Wallet wallet = new Wallet();
         wallet.setWalletNumber(request.getWallet_number());
         //wallet.setBalance(request.getBalance());
-        wallet.setUsersByUserId(userService.findById(request.getUser_id()));
+        wallet.setUser(userRepository.findById(request.getUser_id()).get());
         return walletRepository.save(wallet);
     }
 
@@ -35,7 +36,7 @@ public class WalletServiceImpl implements WalletService {
         Wallet wallet = findById(id);
         wallet.setWalletNumber(request.getWallet_number());
         //wallet.setBalance(request.getBalance());
-        wallet.setUsersByUserId(userService.findById(request.getUser_id()));
+        wallet.setUser(userRepository.findById(request.getUser_id()).get());
         return walletRepository.save(wallet);
     }
 
