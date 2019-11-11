@@ -1,5 +1,7 @@
 package soe.mdeis.modulo5.virtualwallet.database.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -10,12 +12,15 @@ public class Wallet {
     private Integer id;
     private String walletNumber;
     private Double balance;
+    @JsonIgnore
     private Collection<Transaction> transactionsById;
+    @JsonIgnore
     private Collection<Transaction> transactionsByDestinyWalletId;
     private User usersByUserId;
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -86,4 +91,12 @@ public class Wallet {
     public void setUsersByUserId(User usersByUserId) {
         this.usersByUserId = usersByUserId;
     }
+
+    @PrePersist
+    public void prePersist(){
+        if(balance == null){
+            balance = 0.0;
+        }
+    }
+
 }

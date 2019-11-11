@@ -1,5 +1,7 @@
 package soe.mdeis.modulo5.virtualwallet.database.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -11,11 +13,14 @@ public class User {
     private String name;
     private String email;
     private String password;
+    @JsonIgnore
     private Collection<LogEvent> logEventsById;
+    @JsonIgnore
     private Collection<Wallet> walletsById;
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
