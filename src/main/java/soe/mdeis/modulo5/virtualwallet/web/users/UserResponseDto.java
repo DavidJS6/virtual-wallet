@@ -1,12 +1,9 @@
 package soe.mdeis.modulo5.virtualwallet.web.users;
 
-public class UserResponseDto extends UserDto {
+public class UserResponseDto {
     private Integer id;
-
-    public UserResponseDto(Integer id, String email, String name) {
-        super(email, name);
-        this.id = id;
-    }
+    private String name;
+    private String email;
 
     public Integer getId() {
         return id;
@@ -14,5 +11,21 @@ public class UserResponseDto extends UserDto {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

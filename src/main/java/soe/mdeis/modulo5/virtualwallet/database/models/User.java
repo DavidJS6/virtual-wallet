@@ -16,6 +16,7 @@ public class User {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -79,7 +80,7 @@ public class User {
         this.logEventsById = logEventsById;
     }
 
-    @OneToMany(mappedBy = "usersByUserId")
+    @OneToMany(mappedBy = "user")
     public Collection<Wallet> getWalletsById() {
         return walletsById;
     }
