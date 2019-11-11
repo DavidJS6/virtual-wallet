@@ -84,7 +84,7 @@ public class User {
         this.logEventsById = logEventsById;
     }
 
-    @OneToMany(mappedBy = "usersByUserId")
+    @OneToMany(mappedBy = "user")
     public Collection<Wallet> getWalletsById() {
         return walletsById;
     }

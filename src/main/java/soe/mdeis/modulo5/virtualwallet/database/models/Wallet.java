@@ -16,7 +16,7 @@ public class Wallet {
     private Collection<Transaction> transactionsById;
     @JsonIgnore
     private Collection<Transaction> transactionsByDestinyWalletId;
-    private User usersByUserId;
+    private User user;
 
     @Id
     @Column(name = "id")
@@ -84,12 +84,12 @@ public class Wallet {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    public User getUsersByUserId() {
-        return usersByUserId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsersByUserId(User usersByUserId) {
-        this.usersByUserId = usersByUserId;
+    public void setUser(User usersByUserId) {
+        this.user = usersByUserId;
     }
 
     @PrePersist

@@ -1,13 +1,14 @@
 package soe.mdeis.modulo5.virtualwallet.web.users.service;
 
-import soe.mdeis.modulo5.virtualwallet.database.models.User;
+import soe.mdeis.modulo5.virtualwallet.web.ResourceService;
+import soe.mdeis.modulo5.virtualwallet.web.users.UserRequestDto;
+import soe.mdeis.modulo5.virtualwallet.web.users.UserResponseDto;
+import soe.mdeis.modulo5.virtualwallet.web.users.WalletResponseDto;
 
 import java.util.List;
 
-public interface UserService {
-    List<User> findAll();
+public interface UserService extends ResourceService<UserRequestDto, UserResponseDto> {
 
-    User findById(int id);
+    List<WalletResponseDto> getUserWallets(int id);
 
-    //boolean store(User user);
 }
