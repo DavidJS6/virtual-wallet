@@ -1,4 +1,4 @@
-package soe.mdeis.modulo5.virtualwallet.web;
+package soe.mdeis.modulo5.virtualwallet.web.parsing;
 
 import java.util.LinkedList;
 import java.util.List;
