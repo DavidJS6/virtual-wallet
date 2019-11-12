@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import soe.mdeis.modulo5.virtualwallet.database.models.Wallet;
 import soe.mdeis.modulo5.virtualwallet.web.wallets.service.WalletService;
 
 import java.util.List;
@@ -22,27 +21,28 @@ public class WalletController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> saveWallet(@RequestBody WalletRequestDto requestDto) {
-        return new ResponseEntity<>(service.save(requestDto), HttpStatus.OK);
+    public ResponseEntity<Object> saveWallet(@RequestBody WalletRequestDto requestDto) throws WalletException {
+        return new ResponseEntity<>(service.store(requestDto), HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> updateWallet(@PathVariable int id, @RequestBody WalletRequestDto requestDto) {
+    public ResponseEntity<Object> updateWallet(@PathVariable int id, @RequestBody WalletRequestDto requestDto) throws WalletException {
         return new ResponseEntity<>(service.update(id, requestDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteWallet(@PathVariable int id) {
-        return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
+    public ResponseEntity<Object> deleteWallet(@PathVariable int id) throws WalletException {
+        service.delete(id);
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Wallet getSingle(@PathVariable int id) {
+    public WalletResponseDto getSingle(@PathVariable int id) throws WalletException {
         return service.findById(id);
     }
 
     @GetMapping
-    public List<Wallet> getAll() {
+    public List<WalletResponseDto> getAll() {
         return service.findAll();
     }
 

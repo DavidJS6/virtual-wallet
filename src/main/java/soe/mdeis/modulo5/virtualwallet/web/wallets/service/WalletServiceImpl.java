@@ -1,11 +1,14 @@
 package soe.mdeis.modulo5.virtualwallet.web.wallets.service;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import soe.mdeis.modulo5.virtualwallet.database.models.Wallet;
 import soe.mdeis.modulo5.virtualwallet.database.repositories.WalletRepository;
-import soe.mdeis.modulo5.virtualwallet.web.users.UserException;
+import soe.mdeis.modulo5.virtualwallet.web.parsing.DtoEntityParser;
+import soe.mdeis.modulo5.virtualwallet.web.parsing.DtoEntityParserAbstractImpl;
 import soe.mdeis.modulo5.virtualwallet.web.users.service.UserService;
+import soe.mdeis.modulo5.virtualwallet.web.wallets.WalletException;
 import soe.mdeis.modulo5.virtualwallet.web.wallets.WalletRequestDto;
 import soe.mdeis.modulo5.virtualwallet.web.wallets.WalletResponseDto;
 
@@ -17,6 +20,8 @@ public class WalletServiceImpl implements WalletService {
     private final WalletRepository walletRepository;
     private final UserService userService;
 
+    private DtoEntityParser<WalletRequestDto, WalletResponseDto, Wallet> parser = new WalletParser();
+
     @Autowired
     public WalletServiceImpl(WalletRepository walletRepository, UserService userService) {
         this.walletRepository = walletRepository;
@@ -25,26 +30,54 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public List<WalletResponseDto> findAll() {
-        return null;
+        List<Wallet> wallets = walletRepository.findAll();
+        return parser.parseEntitiesToResponseDtos(wallets);
     }
 
     @Override
-    public WalletResponseDto findById(int id) throws UserException {
-        return null;
+    public WalletResponseDto findById(int id) throws WalletException {
+        Wallet wallet = walletRepository.findById(id).orElseThrow(() -> new WalletException());
+        return parser.parseEntityToResponseDto(wallet);
     }
 
     @Override
-    public WalletResponseDto update(int id, WalletRequestDto requestDto) {
-        return null;
+    public WalletResponseDto update(int id, WalletRequestDto requestDto) throws WalletException {
+        Wallet previousWallet = walletRepository.findById(id).orElseThrow(() -> new WalletException());
+        Wallet walletToUpdate = parser.parseRequestDtoToEntity(requestDto);
+        walletToUpdate.setId(id);
+        walletToUpdate.setBalance(previousWallet.getBalance());
+        Wallet updatedWallet = walletRepository.save(walletToUpdate);
+        return parser.parseEntityToResponseDto(updatedWallet);
     }
 
     @Override
     public WalletResponseDto store(WalletRequestDto requestDto) {
-        return null;
+        Wallet walletToSave = parser.parseRequestDtoToEntity(requestDto);
+        Wallet savedWallet = walletRepository.save(walletToSave);
+        return parser.parseEntityToResponseDto(savedWallet);
     }
 
     @Override
     public void delete(int id) {
+        Wallet toDelete = new Wallet();
+        toDelete.setId(id);
+        walletRepository.delete(toDelete);
+    }
+
+    private static class WalletParser extends DtoEntityParserAbstractImpl<WalletRequestDto, WalletResponseDto, Wallet> {
+
+        @Override
+        public WalletResponseDto parseEntityToResponseDto(Wallet wallet) {
+            ModelMapper mapper = new ModelMapper();
+            return mapper.map(wallet, WalletResponseDto.class);
+        }
+
+        @Override
+        public Wallet parseRequestDtoToEntity(WalletRequestDto requestDto) {
+            ModelMapper mapper = new ModelMapper();
+            return mapper.map(requestDto, Wallet.class);
+        }
 
     }
+
 }

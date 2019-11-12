@@ -1,41 +1,27 @@
 package soe.mdeis.modulo5.virtualwallet.web.wallets;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class WalletRequestDto {
 
-    private int id;
-    private String wallet_number;
-    private Double balance;
-    private Integer user_id;
+    @JsonProperty("wallet_number")
+    private String walletNumber;
+    @JsonProperty("user_id")
+    private Integer userId;
 
-    public int getId() {
-        return id;
+    public String getWalletNumber() {
+        return walletNumber;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setWalletNumber(String walletNumber) {
+        this.walletNumber = walletNumber;
     }
 
-    public String getWallet_number() {
-        return wallet_number;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setWallet_number(String wallet_number) {
-        this.wallet_number = wallet_number;
-    }
-
-    public Double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Double balance) {
-        this.balance = balance;
-    }
-
-    public Integer getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }
