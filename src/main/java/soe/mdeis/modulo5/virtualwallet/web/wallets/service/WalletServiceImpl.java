@@ -3,6 +3,7 @@ package soe.mdeis.modulo5.virtualwallet.web.wallets.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import soe.mdeis.modulo5.virtualwallet.database.models.User;
 import soe.mdeis.modulo5.virtualwallet.database.models.Wallet;
 import soe.mdeis.modulo5.virtualwallet.database.repositories.WalletRepository;
 import soe.mdeis.modulo5.virtualwallet.web.parsing.DtoEntityParser;
@@ -42,19 +43,25 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public WalletResponseDto update(int id, WalletRequestDto requestDto) throws WalletException {
-        Wallet previousWallet = walletRepository.findById(id).orElseThrow(() -> new WalletException());
-        Wallet walletToUpdate = parser.parseRequestDtoToEntity(requestDto);
-        walletToUpdate.setId(id);
-        walletToUpdate.setBalance(previousWallet.getBalance());
+        Wallet walletToUpdate = walletRepository.findById(id).orElseThrow(() -> new WalletException());
+        walletToUpdate.setWalletNumber(requestDto.getWalletNumber());
+        User user = new User();
+        user.setId(requestDto.getUserId());
+        walletToUpdate.setUser(user);
         Wallet updatedWallet = walletRepository.save(walletToUpdate);
         return parser.parseEntityToResponseDto(updatedWallet);
     }
 
     @Override
     public WalletResponseDto store(WalletRequestDto requestDto) {
-        Wallet walletToSave = parser.parseRequestDtoToEntity(requestDto);
-        Wallet savedWallet = walletRepository.save(walletToSave);
-        return parser.parseEntityToResponseDto(savedWallet);
+        //Wallet walletToSave = parser.parseRequestDtoToEntity(requestDto);
+        Wallet walletToSave = new Wallet();
+        walletToSave.setWalletNumber(requestDto.getWalletNumber());
+        User user = new User();
+        user.setId(requestDto.getUserId());
+        walletToSave.setUser(user);
+        walletToSave.setBalance(0.0);
+        return parser.parseEntityToResponseDto(walletRepository.save(walletToSave));
     }
 
     @Override
