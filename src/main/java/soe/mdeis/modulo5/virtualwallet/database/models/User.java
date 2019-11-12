@@ -1,6 +1,8 @@
 package soe.mdeis.modulo5.virtualwallet.database.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -91,5 +93,12 @@ public class User {
 
     public void setWalletsById(Collection<Wallet> walletsById) {
         this.walletsById = walletsById;
+    }
+
+    @PrePersist
+    @PreUpdate
+    public void encodePassword() {
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        this.password = encoder.encode(password);
     }
 }

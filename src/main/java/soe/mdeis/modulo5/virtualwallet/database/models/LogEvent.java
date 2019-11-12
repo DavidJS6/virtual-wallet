@@ -9,8 +9,17 @@ import java.util.Objects;
 public class LogEvent {
     private Integer id;
     private Timestamp date;
-    private LogEventType event;
+    private String event;
     private User user;
+
+    public LogEvent() {
+    }
+
+    public LogEvent(Timestamp date, String event, User user) {
+        this.date = date;
+        this.event = event;
+        this.user = user;
+    }
 
     @Id
     @Column(name = "id")
@@ -35,11 +44,11 @@ public class LogEvent {
 
     @Basic
     @Column(name = "event")
-    public LogEventType getEvent() {
+    public String getEvent() {
         return event;
     }
 
-    public void setEvent(LogEventType event) {
+    public void setEvent(String event) {
         this.event = event;
     }
 
