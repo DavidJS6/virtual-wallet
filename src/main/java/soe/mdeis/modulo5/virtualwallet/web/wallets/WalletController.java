@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import soe.mdeis.modulo5.virtualwallet.web.transactions.TransactionResponseDto;
 import soe.mdeis.modulo5.virtualwallet.web.wallets.service.WalletService;
 
 import java.util.List;
@@ -44,6 +45,11 @@ public class WalletController {
     @GetMapping
     public List<WalletResponseDto> getAll() {
         return service.findAll();
+    }
+
+    @GetMapping("/{id}/transactions")
+    public List<TransactionResponseDto> getTransactions(@PathVariable int id){
+        return service.getWalletTransactions(id);
     }
 
 

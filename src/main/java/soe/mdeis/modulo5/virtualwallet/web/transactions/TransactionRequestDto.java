@@ -12,9 +12,9 @@ public class TransactionRequestDto {
     @JsonProperty("transaction_type")
     private TransactionType transactionType;
     @JsonProperty("source_wallet_id")
-    private int sourceWalletId;
+    private Integer sourceWalletId;
     @JsonProperty("destiny_wallet_id")
-    private int destinyWalletId;
+    private Integer destinyWalletId;
 
     public String getResponsiblePersonName() {
         return responsiblePersonName;

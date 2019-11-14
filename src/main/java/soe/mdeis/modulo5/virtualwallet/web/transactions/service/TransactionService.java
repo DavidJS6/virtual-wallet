@@ -3,6 +3,7 @@ package soe.mdeis.modulo5.virtualwallet.web.transactions.service;
 import soe.mdeis.modulo5.virtualwallet.web.transactions.TransactionException;
 import soe.mdeis.modulo5.virtualwallet.web.transactions.TransactionRequestDto;
 import soe.mdeis.modulo5.virtualwallet.web.transactions.TransactionResponseDto;
+import soe.mdeis.modulo5.virtualwallet.web.wallets.WalletException;
 
 import java.util.List;
 
@@ -12,6 +13,6 @@ public interface TransactionService {
 
     TransactionResponseDto findById(int id) throws TransactionException;
 
-    TransactionResponseDto store(TransactionRequestDto requestDto);
+    TransactionResponseDto store(TransactionRequestDto requestDto) throws WalletException;
 
 }

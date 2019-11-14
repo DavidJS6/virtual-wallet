@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import soe.mdeis.modulo5.virtualwallet.database.models.Transaction;
 import soe.mdeis.modulo5.virtualwallet.web.transactions.service.TransactionService;
+import soe.mdeis.modulo5.virtualwallet.web.wallets.WalletException;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class TransactionController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> saveTransaction(@RequestBody TransactionRequestDto requestDto) {
+    public ResponseEntity<Object> saveTransaction(@RequestBody TransactionRequestDto requestDto) throws WalletException {
         return new ResponseEntity<>(service.store(requestDto), HttpStatus.OK);
     }
 
