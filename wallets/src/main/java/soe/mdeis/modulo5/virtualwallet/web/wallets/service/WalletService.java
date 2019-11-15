@@ -9,5 +9,7 @@ import soe.mdeis.modulo5.virtualwallet.web.wallets.WalletResponseDto;
 import java.util.List;
 
 public interface WalletService extends ResourceService<WalletRequestDto, WalletResponseDto, WalletException> {
-    public List<TransactionResponseDto> getWalletTransactions(int id);
+    List<TransactionResponseDto> getWalletTransactions(int id);
+
+    WalletResponseDto findByNumber(String walletNumber) throws WalletException;
 }

@@ -84,6 +84,12 @@ public class WalletServiceImpl implements WalletService {
         return new TransactionParserResponse().parseEntitiesToResponseDtos(transactions);
     }
 
+    @Override
+    public WalletResponseDto findByNumber(String walletNumber) throws WalletException {
+        Wallet wallet = walletRepository.findByWalletNumber(walletNumber).orElseThrow(() -> new WalletException("Wallet with specified number not found."));
+        return parser.parseEntityToResponseDto(wallet);
+    }
+
     private static class WalletParser extends DtoEntityParserAbstractImpl<WalletRequestDto, WalletResponseDto, Wallet> {
 
         @Override

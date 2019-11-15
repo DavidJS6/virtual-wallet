@@ -41,6 +41,11 @@ public class WalletController {
         return service.findById(id);
     }
 
+    @GetMapping("/by-number/{walletNumber}")
+    public WalletResponseDto getSingle(@PathVariable String walletNumber) throws WalletException {
+        return service.findByNumber(walletNumber);
+    }
+
     @GetMapping
     public List<WalletResponseDto> getAll() {
         return service.findAll();
