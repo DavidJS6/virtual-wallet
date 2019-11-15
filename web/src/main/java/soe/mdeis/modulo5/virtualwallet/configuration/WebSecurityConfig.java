@@ -28,7 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private JwtRequestFilter jwtRequestFilter;
 
-    public WebSecurityConfig(AuthenticationEntryPointImpl authEntryPoint, UserDetailsService userDetailsService, JwtRequestFilter jwtRequestFilter) {
+    public WebSecurityConfig(AuthenticationEntryPointImpl authEntryPoint, UserDetailsService userDetailsService,
+                             JwtRequestFilter jwtRequestFilter) {
         this.authEntryPoint = authEntryPoint;
         this.userDetailsService = userDetailsService;
         this.jwtRequestFilter = jwtRequestFilter;
@@ -44,7 +45,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-
         return new BCryptPasswordEncoder();
     }
 
