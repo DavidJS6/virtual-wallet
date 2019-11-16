@@ -41,7 +41,7 @@ public class SessionController {
     }
 
     @PostMapping("logout")
-    public boolean login(@RequestBody LogoutRquestDto logoutRquest) throws Exception {
+    public boolean logout(@RequestBody LogoutRquestDto logoutRquest) throws Exception {
         return sessionService.logout(logoutRquest);
     }
 
