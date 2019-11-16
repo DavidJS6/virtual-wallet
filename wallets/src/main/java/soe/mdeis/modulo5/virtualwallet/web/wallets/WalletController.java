@@ -20,20 +20,9 @@ public class WalletController {
         this.service = service;
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> saveWallet(@RequestBody WalletRequestDto requestDto) throws WalletException {
-        return new ResponseEntity<>(service.store(requestDto), HttpStatus.OK);
-    }
-
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> updateWallet(@PathVariable int id, @RequestBody WalletRequestDto requestDto) throws WalletException {
-        return new ResponseEntity<>(service.update(id, requestDto), HttpStatus.OK);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteWallet(@PathVariable int id) throws WalletException {
-        service.delete(id);
-        return new ResponseEntity<>(true, HttpStatus.OK);
+    @GetMapping
+    public List<WalletResponseDto> getAll() {
+        return service.findAll();
     }
 
     @GetMapping("/{id}")
@@ -41,20 +30,29 @@ public class WalletController {
         return service.findById(id);
     }
 
-    @GetMapping("/by-number/{walletNumber}")
-    public WalletResponseDto getSingle(@PathVariable String walletNumber) throws WalletException {
-        return service.findByNumber(walletNumber);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> store(@RequestBody WalletRequestDto requestDto) throws WalletException {
+        return new ResponseEntity<>(service.store(requestDto), HttpStatus.OK);
     }
 
-    @GetMapping
-    public List<WalletResponseDto> getAll() {
-        return service.findAll();
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> update(@PathVariable int id, @RequestBody WalletRequestDto requestDto) throws WalletException {
+        return new ResponseEntity<>(service.update(id, requestDto), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable int id) throws WalletException {
+        service.delete(id);
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+    @GetMapping("/by-number/{walletNumber}")
+    public WalletResponseDto getSingleByNumber(@PathVariable String walletNumber) throws WalletException {
+        return service.findByNumber(walletNumber);
     }
 
     @GetMapping("/{id}/transactions")
     public List<TransactionResponseDto> getTransactions(@PathVariable int id) {
         return service.getWalletTransactions(id);
     }
-
-
 }

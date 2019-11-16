@@ -19,11 +19,11 @@ public class JwtUtils implements Serializable {
     @Value("${jwt.token.validitytime}")
     private String validityTime;
 
-    public String getJwtSecret() {
+    String getJwtSecret() {
         return jwtSecret;
     }
 
-    public long getValidityTime() {
+    long getValidityTime() {
         return new Long(validityTime);
     }
 
@@ -37,7 +37,7 @@ public class JwtUtils implements Serializable {
         return getClaimFromToken(token, Claims::getExpiration);
     }
 
-    public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+    private <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = getAllClaimsFromToken(token);
         return claimsResolver.apply(claims);
     }

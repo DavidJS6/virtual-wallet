@@ -27,14 +27,14 @@ public class UserController {
         return service.findById(id);
     }
 
-    @PutMapping("/{id}")
-    public UserResponseDto update(@PathVariable int id, @RequestBody UserRequestDto userRequest) throws UserException {
-        return service.update(id, userRequest);
-    }
-
     @PostMapping
     public UserResponseDto store(@RequestBody UserRequestDto userRequest) throws UserException {
         return service.store(userRequest);
+    }
+
+    @PutMapping("/{id}")
+    public UserResponseDto update(@PathVariable int id, @RequestBody UserRequestDto userRequest) throws UserException {
+        return service.update(id, userRequest);
     }
 
     @DeleteMapping("/{id}")
